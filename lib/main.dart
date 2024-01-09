@@ -12,14 +12,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Suas entradas',
+        title: 'Overtimer',
         theme: ThemeData.dark().copyWith(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 147, 229, 250),
+            seedColor: const Color.fromARGB(255, 84, 94, 239),
             brightness: Brightness.dark,
-            surface: const Color.fromARGB(255, 42, 51, 59),
+            surface: const Color.fromARGB(255, 21, 53, 142),
           ),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 50, 58, 60),
+          scaffoldBackgroundColor: const Color.fromARGB(255, 185, 185, 186),
         ),
         home: const IntervalListScreen());
   }

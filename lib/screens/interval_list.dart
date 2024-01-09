@@ -35,18 +35,30 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = const Center(
+    Widget content = Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           'Ainda não há entradas de tempo.',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.onSecondary,
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 9,
         ),
         SizedBox(
-          height: 12,
+          width: 200,
+          child: Text(
+            'Todo o seu tempo rastreado aparecerá aqui.',
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                color: Theme.of(context).colorScheme.onSecondary,
+                fontWeight: FontWeight.normal),
+            textAlign: TextAlign.center,
+          ),
         ),
-        Text('Todo o seu tempo rastreado aparecerá aqui.'),
       ],
     ));
 
