@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:overtimer_mobile/models/interval_item.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class NewIntervalItem extends StatefulWidget {
   const NewIntervalItem({super.key});
@@ -17,6 +18,11 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
   var _enteredEndDate = '';
   // var _enteredStartDate = new DateTime();
   // var _enteredEndDate = new DateTime();
+
+  var maskFormatter = MaskTextInputFormatter(
+      mask: '##:##',
+      filter: {"#": RegExp(r'[0-9]')},
+      type: MaskAutoCompletionType.lazy);
 
   void _saveItem() {
     if (_formKey.currentState!.validate()) {
@@ -70,6 +76,7 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
                       decoration: const InputDecoration(
                         label: Text('Inicio'),
                       ),
+                      inputFormatters: [maskFormatter],
                       validator: (value) {
                         if (value == null ||
                             value.isEmpty ||

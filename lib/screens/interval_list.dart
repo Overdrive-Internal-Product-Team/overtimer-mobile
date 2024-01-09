@@ -35,7 +35,20 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = const Center(child: Text('Sem entradas salvas.'));
+    Widget content = const Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Ainda não há entradas de tempo.',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(
+          height: 12,
+        ),
+        Text('Todo o seu tempo rastreado aparecerá aqui.'),
+      ],
+    ));
 
     if (_intervalListScreen.isNotEmpty) {
       content = ListView.builder(
@@ -56,12 +69,12 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
     }
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Suas entradas'),
-          actions: [
-            IconButton(onPressed: _addItem, icon: const Icon(Icons.add))
-          ],
-        ),
-        body: content);
+      appBar: AppBar(
+        title: const Text('Suas entradas'),
+      ),
+      body: content,
+      floatingActionButton:
+          ElevatedButton(onPressed: _addItem, child: const Icon(Icons.add)),
+    );
   }
 }
