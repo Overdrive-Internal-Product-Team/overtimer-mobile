@@ -13,14 +13,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Overtimer',
-        theme: ThemeData.dark().copyWith(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 84, 94, 239),
-            brightness: Brightness.dark,
-            surface: const Color.fromARGB(255, 21, 53, 142),
-          ),
-          scaffoldBackgroundColor: const Color.fromARGB(255, 185, 185, 186),
-        ),
+        theme: ThemeData.dark(),
+        // theme: ThemeData.dark().copyWith(
+        //   // textTheme:
+        //   //     const TextTheme(bodyMedium: TextStyle(color: Colors.black)),
+        //   colorScheme: ColorScheme.fromSeed(
+        //     seedColor: const Color.fromARGB(255, 58, 25, 194),
+        //     brightness: Brightness.light,
+        //     surface: const Color.fromARGB(255, 21, 53, 142),
+        //   ),
+        //   scaffoldBackgroundColor: const Color.fromARGB(255, 185, 185, 186),
+        // ),
         home: const IntervalListScreen());
   }
 }

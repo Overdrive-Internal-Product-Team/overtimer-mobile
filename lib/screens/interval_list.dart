@@ -42,7 +42,7 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
         Text(
           'Ainda não há entradas de tempo.',
           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: Theme.of(context).colorScheme.onSecondary,
+              // color: Theme.of(context).colorScheme.onSecondary,
               fontSize: 20,
               fontWeight: FontWeight.bold),
         ),
@@ -54,7 +54,7 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
           child: Text(
             'Todo o seu tempo rastreado aparecerá aqui.',
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                color: Theme.of(context).colorScheme.onSecondary,
+                // color: Theme.of(context).colorScheme.onSecondary,
                 fontWeight: FontWeight.normal),
             textAlign: TextAlign.center,
           ),
