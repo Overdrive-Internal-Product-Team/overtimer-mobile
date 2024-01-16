@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:overtimer_mobile/models/company/company.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
@@ -53,7 +52,7 @@ class _EditCompanyState extends State<EditCompany> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Fechar o diálogo
+                Navigator.of(context).pop();
               },
               child: Text('OK'),
             ),
