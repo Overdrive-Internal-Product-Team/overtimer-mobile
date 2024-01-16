@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:overtimer_mobile/models/interval_item.dart';
-import 'package:overtimer_mobile/screens/new_interval_item.dart';
+import 'package:overtimer_mobile/screens/interval/new_interval_item.dart';
 
 class IntervalListScreen extends StatefulWidget {
   const IntervalListScreen({super.key});
@@ -36,31 +36,33 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
   @override
   Widget build(BuildContext context) {
     Widget content = Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Ainda não há entradas de tempo.',
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              // color: Theme.of(context).colorScheme.onSecondary,
-              fontSize: 20,
-              fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(
-          height: 9,
-        ),
-        SizedBox(
-          width: 200,
-          child: Text(
-            'Todo o seu tempo rastreado aparecerá aqui.',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                // color: Theme.of(context).colorScheme.onSecondary,
-                fontWeight: FontWeight.normal),
-            textAlign: TextAlign.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Ainda não há entradas de tempo.',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge!
+                .copyWith(fontSize: 20, fontWeight: FontWeight.bold),
           ),
-        ),
-      ],
-    ));
+          const SizedBox(
+            height: 9,
+          ),
+          SizedBox(
+            width: 200,
+            child: Text(
+              'Todo o seu tempo rastreado aparecerá aqui.',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .copyWith(fontWeight: FontWeight.normal),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ],
+      ),
+    );
 
     if (_intervalListScreen.isNotEmpty) {
       content = ListView.builder(
