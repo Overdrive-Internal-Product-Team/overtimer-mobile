@@ -2,17 +2,17 @@ class IntervalItem {
   const IntervalItem(
       {required this.id,
       required this.title,
-      required this.startDate,
-      required this.endDate});
+      required this.hours,
+      required this.minutes});
 
   final String id;
   final String title;
-  // final DateTime startDate;
-  // final DateTime endDate;
-  final String startDate;
-  final String endDate;
+  // final DateTime hours;
+  // final DateTime minutes;
+  final String hours;
+  final String minutes;
 
   String get intervalTime {
-    return '$startDate $endDate';
+    return '$hours $minutes';
   }
 }

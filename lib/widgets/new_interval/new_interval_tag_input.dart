@@ -5,7 +5,6 @@ class NewIntervalTagInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return const TextField(
       readOnly: false,
       decoration: InputDecoration(

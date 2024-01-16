@@ -7,7 +7,7 @@ class EditCompany extends StatefulWidget {
   const EditCompany({Key? key}) : super(key: key);
 
   @override
-  _EditCompanyState createState() => _EditCompanyState();
+  State<EditCompany> createState() => _EditCompanyState();
 }
 
 class _EditCompanyState extends State<EditCompany> {
@@ -47,14 +47,14 @@ class _EditCompanyState extends State<EditCompany> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Sucesso'),
-          content: Text('Os dados foram atualizados com sucesso!'),
+          title: const Text('Sucesso'),
+          content: const Text('Os dados foram atualizados com sucesso!'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -182,7 +182,7 @@ class _EditCompanyState extends State<EditCompany> {
           future: _companyData,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             } else if (snapshot.hasError) {
               return Text(
                   'Erro ao carregar os dados da empresa: ${snapshot.error}');
