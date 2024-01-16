@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:overtimer_mobile/models/interval_item.dart';
+import 'package:overtimer_mobile/models/interval/interval_item.dart';
 import 'package:overtimer_mobile/screens/interval/new_interval_item.dart';
 
 class IntervalListScreen extends StatefulWidget {
