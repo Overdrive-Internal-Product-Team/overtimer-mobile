@@ -28,16 +28,22 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
   //     type: MaskAutoCompletionType.lazy);
 
   void _saveItem() {
-    // if (_formKey.currentState!.validate()) {
-    // _formKey.currentState!.save();
-    Navigator.of(context).pop(
-      IntervalItem(
-          id: DateTime.now().toString(),
-          title: _enteredTitle == '' ? 'Sem título' : _enteredTitle,
-          hours: _currentHoursDuration,
-          minutes: _currentMinutesDuration),
-    );
-    // }
+    Navigator.of(context).pop(_createIntervalItem(
+        _enteredTitle == '' ? 'Sem título' : _enteredTitle,
+        _currentHoursDuration,
+        _currentMinutesDuration));
+  }
+
+  IntervalItem _createIntervalItem(title, hoursDuration, minutesDuration) {
+    final now = DateTime.now();
+    final endDate = now.add(Duration(
+        hours: int.parse(hoursDuration), minutes: int.parse(minutesDuration)));
+
+    return IntervalItem(
+        id: DateTime.now().toString(),
+        title: _enteredTitle == '' ? 'Sem título' : _enteredTitle,
+        start: now,
+        end: endDate);
   }
 
   void _onChangeTitle(String newValue) {
