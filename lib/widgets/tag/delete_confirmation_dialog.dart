@@ -38,15 +38,15 @@ class DeleteConfirmationDialog {
                       duration: Duration(seconds: 2),
                     ),
                   );
-                  Navigator.of(context).pop(true);
+                  Navigator.of(context).pop();
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Erro ao excluir a tag: $e'),
+                      content: Text('Erro ao excluir tag: $e'),
                       duration: Duration(seconds: 2),
                     ),
                   );
-                  Navigator.of(context).pop(false);
+                  Navigator.of(context).pop();
                 }
               },
             ),
