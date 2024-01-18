@@ -52,7 +52,7 @@ class _EditCompanyState extends State<EditCompany> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Fechar o diálogo
+                Navigator.of(context).pop();
               },
               child: const Text('OK'),
             ),
