@@ -42,7 +42,7 @@ class _NewIntervalDurationInputState extends State<NewIntervalDurationInput> {
               ),
             ),
             const Text(
-              ':',
+              '',
               style: TextStyle(fontSize: 40),
             ),
             Expanded(

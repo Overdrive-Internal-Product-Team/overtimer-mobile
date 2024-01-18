@@ -35,14 +35,15 @@ class _ListTagState extends State<ListTag> {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewTag(),
+                    builder: (context) => const NewTag(),
                   ),
                 );
                 _refreshTags();
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blueAccent,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                backgroundColor: Colors.blueAccent,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               ),
               child: const Text(
                 'Cadastrar',
