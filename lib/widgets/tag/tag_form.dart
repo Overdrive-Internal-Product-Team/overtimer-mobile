@@ -19,8 +19,7 @@ class TagForm extends StatefulWidget {
 
 class _TagFormState extends State<TagForm> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController
-      _nameController;
+  late TextEditingController _nameController;
   var _enteredName = '';
 
   String submitType = "Cadastrar";
@@ -45,7 +44,7 @@ class _TagFormState extends State<TagForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Erro ao $submitType tag: $e'),
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }

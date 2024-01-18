@@ -8,7 +8,7 @@ class ListContainer extends StatefulWidget {
   final List<TagItem> tags;
   final Function() onModify;
 
-  ListContainer({Key? key, required this.tags, required this.onModify})
+  const ListContainer({Key? key, required this.tags, required this.onModify})
       : super(key: key);
 
   @override
@@ -19,7 +19,7 @@ class _ListContainer extends State<ListContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: widget.tags.isEmpty
           ? const Center(child: Text('Nenhuma tag foi cadastrada ainda!'))
           : ListView.builder(
@@ -30,7 +30,7 @@ class _ListContainer extends State<ListContainer> {
                   title: Text(
                     widget.tags[index].name,
                     textAlign: TextAlign.center,
-                  ),                  
+                  ),
                   onLongPress: () async {
                     await DeleteConfirmationDialog.show(
                         context, index, widget.tags);
@@ -40,7 +40,8 @@ class _ListContainer extends State<ListContainer> {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => EditTag(tagId: widget.tags[index].id),
+                        builder: (context) =>
+                            EditTag(tagId: widget.tags[index].id),
                       ),
                     );
                     await widget.onModify();
