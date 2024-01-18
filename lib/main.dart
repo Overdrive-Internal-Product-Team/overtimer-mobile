@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:overtimer_mobile/screens/category/list_category.dart';
 import 'package:overtimer_mobile/screens/interval/interval_list.dart';
 
 void main() async {
@@ -26,6 +27,6 @@ class MyApp extends StatelessWidget {
         //   ),
         //   scaffoldBackgroundColor: const Color.fromARGB(255, 185, 185, 186),
         // ),
-        home: const IntervalListScreen());
+        home: const ListCategory());
   }
 }

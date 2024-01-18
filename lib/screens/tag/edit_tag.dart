@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:overtimer_mobile/models/tag/tag_item.dart';
+import 'package:overtimer_mobile/models/tag_item.dart';
 import 'package:overtimer_mobile/services/tag_service.dart';
+import 'package:overtimer_mobile/widgets/common/data_retrieve_fail.dart';
 import 'package:overtimer_mobile/widgets/tag/tag_form.dart';
 
 class EditTag extends StatefulWidget {
@@ -48,9 +49,7 @@ class _EditTagState extends State<EditTag> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Erro ao carregar tag: ${snapshot.error}'),
-            );
+            return DataRetrieveFail(onRetry: _refreshTag);
           } else {
             return TagForm(
               tag: snapshot.data!,
@@ -60,5 +59,11 @@ class _EditTagState extends State<EditTag> {
         },
       ),
     );
+  }
+
+  void _refreshTag() {
+    setState(() {
+      _tagFuture = TagService.getTag(widget.tagId);
+    });
   }
 }

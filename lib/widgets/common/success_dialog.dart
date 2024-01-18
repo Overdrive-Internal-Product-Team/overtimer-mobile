@@ -11,7 +11,7 @@ class SuccessDialog {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Sucesso'),
-          content: Text('Ação de $submitType Tag realizada com sucesso!'),
+          content: Text('Ação de $submitType Item realizada com sucesso!'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
