@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:overtimer_mobile/models/category_item.dart';
-import 'package:overtimer_mobile/screens/category/edit_category.dart';
-import 'package:overtimer_mobile/widgets/category/delete_confirmation_dialog.dart';
+import 'package:overtimer_mobile/models/project_item.dart';
+import 'package:overtimer_mobile/screens/project/edit_project.dart';
+import 'package:overtimer_mobile/widgets/project/delete_confirmation_dialog.dart';
 
 class ListContainer extends StatefulWidget {
-  final List<CategoryItem> categories;
+  final List<ProjectItem> projects;
   final Function() onModify;
 
-  const ListContainer({Key? key, required this.categories, required this.onModify})
+  const ListContainer({Key? key, required this.projects, required this.onModify})
       : super(key: key);
 
   @override
@@ -19,27 +19,27 @@ class _ListContainer extends State<ListContainer> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
-      child: widget.categories.isEmpty
-          ? const Center(child: Text('Nenhuma categoria foi cadastrada ainda!'))
+      child: widget.projects.isEmpty
+          ? const Center(child: Text('Nenhum projeto foi cadastrado ainda!'))
           : ListView.builder(
         shrinkWrap: true,
-        itemCount: widget.categories.length,
+        itemCount: widget.projects.length,
         itemBuilder: (context, index) {
           return ListTile(
             title: Text(
-              widget.categories[index].name,
+              widget.projects[index].name,
               textAlign: TextAlign.center,
             ),
             onLongPress: () async {
               await DeleteConfirmationDialog.show(
-                  context, index, widget.categories);
+                  context, index, widget.projects);
               await widget.onModify();
             },
             onTap: () async {
               await Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => EditCategory(categoryId: widget.categories[index].id),
+                  builder: (context) => EditProject(projectId: widget.projects[index].id),
                 ),
               );
               await widget.onModify();

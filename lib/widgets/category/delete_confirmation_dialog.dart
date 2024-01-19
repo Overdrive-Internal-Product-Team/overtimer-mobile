@@ -12,7 +12,7 @@ class DeleteConfirmationDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirmar exclusão'),
+          title: const Text('Confirmar exclusão'),
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
@@ -22,20 +22,20 @@ class DeleteConfirmationDialog {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context).pop(false);
               },
             ),
             TextButton(
-              child: Text('Confirmar'),
+              child: const Text('Confirmar'),
               onPressed: () async {
                 try {
                   await CategoryService.deleteCategory(categoryId);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Categoria "$categoryName" excluída com sucesso.'),
-                      duration: Duration(seconds: 2),
+                      duration: const Duration(seconds: 2),
                     ),
                   );
                   Navigator.of(context).pop();
@@ -43,7 +43,7 @@ class DeleteConfirmationDialog {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Erro ao excluir categoria: $e'),
-                      duration: Duration(seconds: 2),
+                      duration: const Duration(seconds: 2),
                     ),
                   );
                   Navigator.of(context).pop();
