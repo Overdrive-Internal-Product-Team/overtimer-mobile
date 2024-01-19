@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:overtimer_mobile/models/tag_item.dart';
+import 'package:overtimer_mobile/models/category_item.dart';
 import 'package:overtimer_mobile/widgets/common/success_dialog.dart';
 
-class TagForm extends StatefulWidget {
+class CategoryForm extends StatefulWidget {
   final Function(String enteredName, int companyId) onSubmit;
-  final TagItem? tag;
+  final CategoryItem? category;
 
-  const TagForm({
+  const CategoryForm({
     Key? key,
     required this.onSubmit,
-    this.tag,
+    this.category,
   }) : super(key: key);
 
   @override
-  _TagFormState createState() => _TagFormState();
+  _CategoryFormState createState() => _CategoryFormState();
 }
 
-class _TagFormState extends State<TagForm> {
+class _CategoryFormState extends State<CategoryForm> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nameController;
   var _enteredName = '';
@@ -26,8 +26,8 @@ class _TagFormState extends State<TagForm> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController(text: widget.tag?.name);
-    if (widget.tag != null) {
+    _nameController = TextEditingController(text: widget.category?.name);
+    if (widget.category != null) {
       submitType = "Editar";
     }
   }
@@ -42,8 +42,8 @@ class _TagFormState extends State<TagForm> {
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Erro ao $submitType tag: $e'),
-            duration: const Duration(seconds: 2),
+            content: Text('Erro ao $submitType categoria: $e'),
+            duration: Duration(seconds: 2),
           ),
         );
       }
