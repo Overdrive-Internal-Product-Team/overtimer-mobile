@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:overtimer_mobile/screens/interval/interval_list.dart';
+import 'package:overtimer_mobile/screens/base_screen.dart';
 import 'package:overtimer_mobile/screens/tag/list_tag.dart';
 import 'package:overtimer_mobile/widgets/drawer/main_drawer.dart';
 
@@ -9,24 +9,8 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  void _setScreen(String identifier) async {
-    // Navigator.of(context).pop();
-    if (identifier == 'tags') {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => const ListTag(),
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +29,6 @@ class _MyAppState extends State<MyApp> {
         //   scaffoldBackgroundColor: const Color.fromARGB(255, 185, 185, 186),
         // ),
         // home: const IntervalListScreen());
-        home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Overtimer'),
-          ),
-          drawer: MainDrawer(
-            onSelectScreen: _setScreen,
-          ),
-          body: const IntervalListScreen(),
-        ));
+        home: const BaseScreen());
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:overtimer_mobile/widgets/drawer/drawer_item.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key, required this.onSelectScreen});
@@ -20,7 +21,7 @@ class MainDrawer extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.fastfood,
+                Icon(Icons.timer,
                     color: Theme.of(context).colorScheme.primary, size: 48),
                 const SizedBox(
                   width: 18,
@@ -35,32 +36,44 @@ class MainDrawer extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            leading: Icon(Icons.restaurant,
-                size: 26, color: Theme.of(context).colorScheme.onBackground),
-            title: Text(
-              'Tags',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 24),
-            ),
-            onTap: () {
-              onSelectScreen('tags');
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.settings,
-                size: 26, color: Theme.of(context).colorScheme.onBackground),
-            title: Text(
-              'Filters',
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  fontSize: 24),
-            ),
-            onTap: () {
-              onSelectScreen('filters');
-            },
-          ),
+          DrawerItem(
+              onSelectScreen: onSelectScreen,
+              category: 'entradas',
+              icon: Icons.insert_chart),
+          DrawerItem(
+              onSelectScreen: onSelectScreen,
+              category: 'tags',
+              icon: Icons.label),
+          DrawerItem(
+              onSelectScreen: onSelectScreen,
+              category: 'empresa',
+              icon: Icons.business),
+          // ListTile(
+          //   leading: Icon(Icons.restaurant,
+          //       size: 26, color: Theme.of(context).colorScheme.onBackground),
+          //   title: Text(
+          //     'Tags',
+          //     style: Theme.of(context).textTheme.titleSmall!.copyWith(
+          //         color: Theme.of(context).colorScheme.onBackground,
+          //         fontSize: 24),
+          //   ),
+          //   onTap: () {
+          //     onSelectScreen('tags');
+          //   },
+          // ),
+          // ListTile(
+          //   leading: Icon(Icons.settings,
+          //       size: 26, color: Theme.of(context).colorScheme.onBackground),
+          //   title: Text(
+          //     'Filters',
+          //     style: Theme.of(context).textTheme.titleSmall!.copyWith(
+          //         color: Theme.of(context).colorScheme.onBackground,
+          //         fontSize: 24),
+          //   ),
+          //   onTap: () {
+          //     onSelectScreen('filters');
+          //   },
+          // ),
         ],
       ),
     );
