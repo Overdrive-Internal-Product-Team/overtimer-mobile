@@ -10,14 +10,14 @@ class NewTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Future<void> _handleTagSubmission(String enteredName, int companyId) async {
+    Future<void> handleTagSubmission(String enteredName, int companyId) async {
       try {
         await TagService.addTag(enteredName, companyId);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Erro ao cadastrar tag: $e'),
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
@@ -28,7 +28,7 @@ class NewTag extends StatelessWidget {
         title: const Text('Cadastro de Tag'),
       ),
       body: TagForm(
-        onSubmit: _handleTagSubmission,
+        onSubmit: handleTagSubmission,
       ),
     );
   }

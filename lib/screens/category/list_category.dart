@@ -34,14 +34,14 @@ class _ListCategoryState extends State<ListCategory> {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => NewCategory(),
+                    builder: (context) => const NewCategory(),
                   ),
                 );
                 _refreshCategories();
               },
               style: ElevatedButton.styleFrom(
-                primary: Colors.blueAccent,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                backgroundColor: Colors.blueAccent,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               ),
               child: const Text(
                 'Cadastrar',

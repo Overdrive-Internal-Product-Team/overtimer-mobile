@@ -44,7 +44,7 @@ class _TagFormState extends State<TagForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Erro ao $submitType tag: $e'),
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }

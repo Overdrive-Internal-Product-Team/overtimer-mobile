@@ -10,14 +10,14 @@ class NewCategory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Future<void> _handleCategorySubmission(String enteredName, int companyId) async {
+    Future<void> handleCategorySubmission(String enteredName, int companyId) async {
       try {
         await CategoryService.addCategory(enteredName, companyId);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Erro ao cadastrar categoria: $e'),
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }
@@ -28,7 +28,7 @@ class NewCategory extends StatelessWidget {
         title: const Text('Cadastro de Categoria'),
       ),
       body: CategoryForm(
-        onSubmit: _handleCategorySubmission,
+        onSubmit: handleCategorySubmission,
       ),
     );
   }

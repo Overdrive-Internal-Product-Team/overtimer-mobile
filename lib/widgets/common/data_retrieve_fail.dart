@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DataRetrieveFail extends StatelessWidget {
   final VoidCallback onRetry;
 
-  DataRetrieveFail({required this.onRetry});
+  const DataRetrieveFail({super.key, required this.onRetry});
 
   @override
   Widget build(BuildContext context) {

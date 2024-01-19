@@ -31,7 +31,7 @@ class _EditCategoryState extends State<EditCategory> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Erro ao editar categoria: $e'),
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
     }

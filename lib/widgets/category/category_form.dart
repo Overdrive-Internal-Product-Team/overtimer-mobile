@@ -43,7 +43,7 @@ class _CategoryFormState extends State<CategoryForm> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Erro ao $submitType categoria: $e'),
-            duration: Duration(seconds: 2),
+            duration: const Duration(seconds: 2),
           ),
         );
       }

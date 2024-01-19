@@ -7,7 +7,7 @@ class ListContainer extends StatefulWidget {
   final List<TagItem> tags;
   final Function() onModify;
 
-  ListContainer({Key? key, required this.tags, required this.onModify})
+  const ListContainer({Key? key, required this.tags, required this.onModify})
       : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class _ListContainer extends State<ListContainer> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       child: widget.tags.isEmpty
           ? const Center(child: Text('Nenhuma tag foi cadastrada ainda!'))
           : ListView.builder(
