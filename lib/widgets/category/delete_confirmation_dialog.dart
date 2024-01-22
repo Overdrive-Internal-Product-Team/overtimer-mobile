@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:overtimer_mobile/models/tag_item.dart';
-import 'package:overtimer_mobile/services/tag_service.dart';
+import 'package:overtimer_mobile/models/category_item.dart';
+import 'package:overtimer_mobile/services/category_service.dart';
 
 class DeleteConfirmationDialog {
-  static Future<bool> show(BuildContext context, int index, List<TagItem> tags) async {
-    int tagId = tags[index].id;
-    String tagName = tags[index].name;
+  static Future<bool> show(BuildContext context, int index, List<CategoryItem> categories) async {
+    int categoryId = categories[index].id;
+    String categoryName = categories[index].name;
 
     bool? shouldDelete = await showDialog<bool>(
       context: context,
@@ -16,7 +16,7 @@ class DeleteConfirmationDialog {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Deseja excluir a tag "$tagName"?'),
+                Text('Deseja excluir a categoria "$categoryName"?'),
               ],
             ),
           ),
@@ -31,10 +31,10 @@ class DeleteConfirmationDialog {
               child: const Text('Confirmar'),
               onPressed: () async {
                 try {
-                  await TagService.deleteTag(tagId);
+                  await CategoryService.deleteCategory(categoryId);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Tag "$tagName" excluída com sucesso.'),
+                      content: Text('Categoria "$categoryName" excluída com sucesso.'),
                       duration: const Duration(seconds: 2),
                     ),
                   );
@@ -42,7 +42,7 @@ class DeleteConfirmationDialog {
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Erro ao excluir tag: $e'),
+                      content: Text('Erro ao excluir categoria: $e'),
                       duration: const Duration(seconds: 2),
                     ),
                   );
@@ -58,4 +58,3 @@ class DeleteConfirmationDialog {
     return shouldDelete ?? false;
   }
 }
-

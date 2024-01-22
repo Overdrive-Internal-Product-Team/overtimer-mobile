@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:overtimer_mobile/models/tag/tag_item.dart';
+import 'package:overtimer_mobile/models/tag_item.dart';
 import 'package:overtimer_mobile/screens/tag/edit_tag.dart';
-import 'package:overtimer_mobile/services/tag_service.dart';
 import 'package:overtimer_mobile/widgets/tag/delete_confirmation_dialog.dart';
 
 class ListContainer extends StatefulWidget {

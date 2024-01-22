@@ -79,16 +79,18 @@ class IntervalService {
   //   }
   // }
 
-  Future<void> addTag(IntervalItem name, int companyId) async {
+  Future<void> addInterval(IntervalItem interval, int companyId) async {
     try {
       var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag');
+      var url = Uri.http(apiUrl, '/api/work');
 
       var headers = {'Content-Type': 'application/json'};
 
       var requestBody = {
         'companyId': companyId,
-        'title': IntervalItem.title,
+        'title': interval.title,
+        'initialDateTime': interval.start,
+        'endDateTime': interval.end,
       };
 
       var response = await http.post(

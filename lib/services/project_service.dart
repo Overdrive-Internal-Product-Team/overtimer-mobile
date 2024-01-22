@@ -1,13 +1,13 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:overtimer_mobile/models/tag_item.dart';
+import 'package:overtimer_mobile/models/project_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-class TagService {
-  static Future<void> deleteTag(int id) async {
+class ProjectService {
+  static Future<void> deleteProject(int id) async {
     try {
       var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag/$id');
+      var url = Uri.http(apiUrl, '/api/Project/$id');
 
       var response = await http.delete(url);
 
@@ -21,25 +21,25 @@ class TagService {
     }
   }
 
-  static Future<List<TagItem>> getTags() async {
+  static Future<List<ProjectItem>> getProjects() async {
     try {
       var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag');
+      var url = Uri.http(apiUrl, '/api/Project');
 
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
         List<dynamic> decodedData = convert.jsonDecode(response.body);
 
-        List<TagItem> tags = decodedData
-            .map((dynamic jsonTag) => TagItem(
-                  id: jsonTag['id'] as int? ?? 0,
-                  name: jsonTag['name'] as String? ?? "",
-                  companyId: jsonTag['companyId'] as int? ?? 0,
-                ))
+        List<ProjectItem> projects = decodedData
+            .map((dynamic jsonProject) => ProjectItem(
+          id: jsonProject['id'] as int? ?? 0,
+          name: jsonProject['name'] as String? ?? "",
+          categoryId: jsonProject['categoryId'] as int? ?? 0,
+        ))
             .toList();
 
-        return tags;
+        return projects;
       } else {
         throw Exception('Falha ao carregar os dados: ${response.body}');
       }
@@ -48,23 +48,23 @@ class TagService {
     }
   }
 
-  static Future<TagItem> getTag(int id) async {
+  static Future<ProjectItem> getProject(int id) async {
     try {
       var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag/$id');
+      var url = Uri.http(apiUrl, '/api/Project/$id');
 
       var response = await http.get(url);
 
       if (response.statusCode == 200) {
         dynamic decodedData = convert.jsonDecode(response.body);
 
-        TagItem tag = TagItem(
+        ProjectItem project = ProjectItem(
           id: decodedData['id'] as int? ?? 0,
           name: decodedData['name'] as String? ?? "",
-          companyId: decodedData['companyId'] as int? ?? 0,
+          categoryId: decodedData['categoryId'] as int? ?? 0,
         );
 
-        return tag;
+        return project;
       } else {
         throw Exception('Falha ao carregar os dados: ${response.body}');
       }
@@ -73,15 +73,15 @@ class TagService {
     }
   }
 
-  static Future<void> addTag(String name, int companyId) async {
+  static Future<void> addProject(String name, int categoryId) async {
     try {
       var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag');
+      var url = Uri.http(apiUrl, '/api/Project');
 
       var headers = {'Content-Type': 'application/json'};
 
       var requestBody = {
-        'companyId': companyId,
+        'categoryId': categoryId,
         'name': name,
       };
 
@@ -93,22 +93,22 @@ class TagService {
 
       if (response.statusCode == 200) {
       } else {
-        throw Exception('Erro no cadastro da tag: ${response.statusCode}');
+        throw Exception('Erro no cadastro do projeto: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Exception during HTTP request: $e');
     }
   }
 
-  static Future<void> editTag(int id, String name, int companyId) async {
+  static Future<void> editProject(int id, String name, int categoryId) async {
     try {
       var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag/$id');
+      var url = Uri.http(apiUrl, '/api/Project/$id');
 
       var headers = {'Content-Type': 'application/json'};
 
       var requestBody = {
-        'companyId': companyId,
+        'categoryId': categoryId,
         'name': name,
       };
 
@@ -119,13 +119,12 @@ class TagService {
       );
 
       if (response.statusCode == 200) {
-        // Tag editada com sucesso
+        // Projeto editado com sucesso
       } else {
-        throw Exception('Erro na edição da tag: ${response.statusCode}');
+        throw Exception('Erro na edição do projeto: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Exception during HTTP request: $e');
     }
   }
-
 }
