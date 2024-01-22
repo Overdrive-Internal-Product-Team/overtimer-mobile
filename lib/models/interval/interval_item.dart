@@ -5,13 +5,15 @@ class IntervalItem {
       required this.start,
       required this.end});
 
-  final String id;
+  final int id;
   final String title;
   final DateTime start;
   final DateTime end;
 
   String get intervalTime {
-    final interval = start.difference(end);
-    return interval.inHours.toString();
+    final interval = end.difference(start);
+    final hours = interval.inHours.toString().padLeft(2, '0');
+    final minutes = (interval.inMinutes % 60).toString().padLeft(2, '0');
+    return '$hours:$minutes';
   }
 }

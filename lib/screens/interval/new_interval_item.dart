@@ -40,7 +40,7 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
         hours: int.parse(hoursDuration), minutes: int.parse(minutesDuration)));
 
     return IntervalItem(
-        id: DateTime.now().toString(),
+        id: 1,
         title: _enteredTitle == '' ? 'Sem título' : _enteredTitle,
         start: now,
         end: endDate);
