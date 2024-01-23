@@ -42,16 +42,21 @@ class MainDrawer extends StatelessWidget {
               icon: Icons.insert_chart),
           DrawerItem(
               onSelectScreen: onSelectScreen,
-              category: 'tags',
-              icon: Icons.label),
-          DrawerItem(
-              onSelectScreen: onSelectScreen,
               category: 'empresa',
               icon: Icons.business),
           DrawerItem(
               onSelectScreen: onSelectScreen,
-              category: 'projeto',
+              category: 'tags',
+              icon: Icons.label),
+          DrawerItem(
+              onSelectScreen: onSelectScreen,
+              category: 'categorias',
+              icon: Icons.category),
+          DrawerItem(
+              onSelectScreen: onSelectScreen,
+              category: 'projetos',
               icon: Icons.folder),
+
         ],
       ),
     );
