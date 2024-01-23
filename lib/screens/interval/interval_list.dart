@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:overtimer_mobile/services/interval_service.dart';
-import 'package:overtimer_mobile/widgets/tag/data_retrieve_fail.dart';
+import 'package:overtimer_mobile/widgets/common/data_retrieve_fail.dart';
 import 'package:overtimer_mobile/models/interval/interval_item.dart';
 import 'package:overtimer_mobile/screens/interval/new_interval_item.dart';
 
@@ -86,7 +86,6 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
         } else if (snapshot.hasError) {
           return DataRetrieveFail(onRetry: _refreshIntervals);
         } else {
-          // return ListContainer(tags: snapshot.data!, onModify: _refreshIntervals);
           return ListView.builder(
             itemCount: _intervalListScreen.length,
             itemBuilder: (ctx, index) => Dismissible(
@@ -105,21 +104,6 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
         }
       },
     );
-    // content = ListView.builder(
-    //   itemCount: _intervalListScreen.length,
-    //   itemBuilder: (ctx, index) => Dismissible(
-    //     onDismissed: (direction) {
-    //       _removeItem(_intervalListScreen[index]);
-    //     },
-    //     key: ValueKey(_intervalListScreen[index].id),
-    //     child: ListTile(
-    //       title: Text(_intervalListScreen[index].title),
-    //       trailing: Text(
-    //         _intervalListScreen[index].intervalTime,
-    //       ),
-    //     ),
-    //   ),
-    // );
 
     return Scaffold(
       appBar: AppBar(

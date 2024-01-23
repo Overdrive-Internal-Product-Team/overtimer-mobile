@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:overtimer_mobile/screens/company/edit_company.dart';
 import 'package:overtimer_mobile/screens/interval/interval_list.dart';
+import 'package:overtimer_mobile/screens/project/list_project.dart';
 import 'package:overtimer_mobile/screens/tag/list_tag.dart';
 import 'package:overtimer_mobile/widgets/drawer/main_drawer.dart';
 
@@ -33,6 +34,13 @@ class _BaseScreenState extends State<BaseScreen> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const IntervalListScreen(),
+        ),
+      );
+    }
+    if (identifier == 'projeto') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const ListProject(),
         ),
       );
     }
