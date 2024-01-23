@@ -23,6 +23,7 @@ class _NewIntervalDurationInputState extends State<NewIntervalDurationInput> {
   void _openAddExpenseOverlay(BuildContext context) {
     _hoursController.text = widget.currentHoursDuration;
     _hoursController.text = widget.currentMinutesDuration;
+
     showDialog(
       useSafeArea: true,
       context: context,
@@ -34,17 +35,23 @@ class _NewIntervalDurationInputState extends State<NewIntervalDurationInput> {
             Expanded(
               child: TextField(
                 controller: _hoursController,
+                textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 40),
+                keyboardType: const TextInputType.numberWithOptions(
+                    signed: false, decimal: false),
               ),
             ),
             const Text(
-              ':',
+              '',
               style: TextStyle(fontSize: 40),
             ),
             Expanded(
               child: TextField(
                 controller: _minutesController,
+                textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 40),
+                keyboardType: const TextInputType.numberWithOptions(
+                    signed: false, decimal: false),
               ),
             ),
           ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:overtimer_mobile/models/interval_item.dart';
+import 'package:overtimer_mobile/models/interval/interval_item.dart';
 import 'package:overtimer_mobile/widgets/new_interval/new_interval_duration_input.dart';
 import 'package:overtimer_mobile/widgets/new_interval/new_interval_item_header.dart';
 import 'package:overtimer_mobile/widgets/new_interval/new_interval_tag_input.dart';
@@ -40,7 +40,7 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
         hours: int.parse(hoursDuration), minutes: int.parse(minutesDuration)));
 
     return IntervalItem(
-        id: DateTime.now().toString(),
+        id: 1,
         title: _enteredTitle == '' ? 'Sem título' : _enteredTitle,
         start: now,
         end: endDate);

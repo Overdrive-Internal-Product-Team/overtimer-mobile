@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:overtimer_mobile/screens/interval/interval_list.dart';
+import 'package:overtimer_mobile/screens/base_screen.dart';
+import 'package:overtimer_mobile/screens/tag/list_tag.dart';
+import 'package:overtimer_mobile/widgets/drawer/main_drawer.dart';
 
 void main() async {
   await dotenv.load();
@@ -10,12 +12,12 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Overtimer',
         theme: ThemeData.dark(),
+
         // theme: ThemeData.dark().copyWith(
         //   // textTheme:
         //   //     const TextTheme(bodyMedium: TextStyle(color: Colors.black)),
@@ -26,6 +28,7 @@ class MyApp extends StatelessWidget {
         //   ),
         //   scaffoldBackgroundColor: const Color.fromARGB(255, 185, 185, 186),
         // ),
-        home: const IntervalListScreen());
+        // home: const IntervalListScreen());
+        home: const BaseScreen());
   }
 }

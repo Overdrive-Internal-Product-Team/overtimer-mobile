@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:overtimer_mobile/models/interval_item.dart';
+import 'package:overtimer_mobile/services/interval_service.dart';
+import 'package:overtimer_mobile/widgets/tag/data_retrieve_fail.dart';
+import 'package:overtimer_mobile/models/interval/interval_item.dart';
 import 'package:overtimer_mobile/screens/interval/new_interval_item.dart';
 
 class IntervalListScreen extends StatefulWidget {
@@ -12,6 +13,19 @@ class IntervalListScreen extends StatefulWidget {
 
 class _IntervalListScreenState extends State<IntervalListScreen> {
   final List<IntervalItem> _intervalListScreen = [];
+  late Future<List<IntervalItem>> _intervalsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _intervalsFuture = IntervalService().getIntervals();
+  }
+
+  void _refreshIntervals() {
+    setState(() {
+      _intervalsFuture = IntervalService().getIntervals();
+    });
+  }
 
   void _addItem() async {
     final newItem = await Navigator.of(context).push<IntervalItem>(
@@ -64,23 +78,48 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
       ),
     );
 
-    if (_intervalListScreen.isNotEmpty) {
-      content = ListView.builder(
-        itemCount: _intervalListScreen.length,
-        itemBuilder: (ctx, index) => Dismissible(
-          onDismissed: (direction) {
-            _removeItem(_intervalListScreen[index]);
-          },
-          key: ValueKey(_intervalListScreen[index].id),
-          child: ListTile(
-            title: Text(_intervalListScreen[index].title),
-            trailing: Text(
-              _intervalListScreen[index].intervalTime,
+    content = FutureBuilder<List<IntervalItem>>(
+      future: _intervalsFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return DataRetrieveFail(onRetry: _refreshIntervals);
+        } else {
+          // return ListContainer(tags: snapshot.data!, onModify: _refreshIntervals);
+          return ListView.builder(
+            itemCount: _intervalListScreen.length,
+            itemBuilder: (ctx, index) => Dismissible(
+              onDismissed: (direction) {
+                _removeItem(_intervalListScreen[index]);
+              },
+              key: ValueKey(_intervalListScreen[index].id),
+              child: ListTile(
+                title: Text(_intervalListScreen[index].title),
+                trailing: Text(
+                  _intervalListScreen[index].intervalTime,
+                ),
+              ),
             ),
-          ),
-        ),
-      );
-    }
+          );
+        }
+      },
+    );
+    // content = ListView.builder(
+    //   itemCount: _intervalListScreen.length,
+    //   itemBuilder: (ctx, index) => Dismissible(
+    //     onDismissed: (direction) {
+    //       _removeItem(_intervalListScreen[index]);
+    //     },
+    //     key: ValueKey(_intervalListScreen[index].id),
+    //     child: ListTile(
+    //       title: Text(_intervalListScreen[index].title),
+    //       trailing: Text(
+    //         _intervalListScreen[index].intervalTime,
+    //       ),
+    //     ),
+    //   ),
+    // );
 
     return Scaffold(
       appBar: AppBar(

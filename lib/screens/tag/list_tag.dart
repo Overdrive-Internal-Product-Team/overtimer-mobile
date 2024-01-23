@@ -42,7 +42,8 @@ class _ListTagState extends State<ListTag> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blueAccent,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
               ),
               child: const Text(
                 'Cadastrar',
