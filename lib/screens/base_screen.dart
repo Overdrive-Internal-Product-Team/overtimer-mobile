@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:overtimer_mobile/screens/category/list_category.dart';
 import 'package:overtimer_mobile/screens/company/edit_company.dart';
 import 'package:overtimer_mobile/screens/interval/interval_list.dart';
 import 'package:overtimer_mobile/screens/project/list_project.dart';
@@ -23,24 +24,31 @@ class _BaseScreenState extends State<BaseScreen> {
         ),
       );
     }
-    if (identifier == 'empresa') {
+    else if (identifier == 'empresa') {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const EditCompany(),
         ),
       );
     }
-    if (identifier == 'entradas') {
+    else if (identifier == 'entradas') {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const IntervalListScreen(),
         ),
       );
     }
-    if (identifier == 'projeto') {
+    else if (identifier == 'projetos') {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const ListProject(),
+        ),
+      );
+    }
+    else if (identifier == 'categorias') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (ctx) => const ListCategory(),
         ),
       );
     }
