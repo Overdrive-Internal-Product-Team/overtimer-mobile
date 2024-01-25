@@ -14,7 +14,6 @@ class BaseScreen extends StatefulWidget {
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  //TODO: melhorar essa função
   void _setScreen(String identifier) async {
     // Navigator.of(context).pop();
     if (identifier == 'tags') {
@@ -23,29 +22,25 @@ class _BaseScreenState extends State<BaseScreen> {
           builder: (ctx) => const ListTag(),
         ),
       );
-    }
-    else if (identifier == 'empresa') {
+    } else if (identifier == 'empresa') {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const EditCompany(),
         ),
       );
-    }
-    else if (identifier == 'entradas') {
+    } else if (identifier == 'entradas') {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const IntervalListScreen(),
         ),
       );
-    }
-    else if (identifier == 'projetos') {
+    } else if (identifier == 'projetos') {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const ListProject(),
         ),
       );
-    }
-    else if (identifier == 'categorias') {
+    } else if (identifier == 'categorias') {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (ctx) => const ListCategory(),
