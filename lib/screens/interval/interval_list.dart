@@ -5,6 +5,7 @@ import 'package:overtimer_mobile/widgets/common/data_retrieve_fail.dart';
 import 'package:overtimer_mobile/models/interval/interval_item.dart';
 import 'package:overtimer_mobile/models/tag_item.dart';
 import 'package:overtimer_mobile/screens/interval/new_interval_item.dart';
+import 'package:overtimer_mobile/widgets/interval/delete_confirmation_dialog.dart';
 
 class IntervalListScreen extends StatefulWidget {
   const IntervalListScreen({super.key});
@@ -52,10 +53,12 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
     }
   }
 
-  _removeItem(IntervalItem item) {
-    setState(() {
-      _intervalListScreen.remove(item);
-    });
+  _removeItem(IntervalItem item) async {
+    await DeleteConfirmationDialog.show(context, item);
+    _refreshIntervals();
+    // setState(() {
+    // _intervalListScreen.remove(item);
+    // });
   }
 
   @override
@@ -100,8 +103,9 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (ctx, index) => Dismissible(
-              onDismissed: (direction) {
-                _removeItem(snapshot.data![index]);
+              onDismissed: (direction) async {
+                await _removeItem(snapshot.data![index]);
+                _refreshIntervals();
               },
               key: ValueKey(snapshot.data![index].id),
               child: ListTile(

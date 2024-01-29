@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:overtimer_mobile/models/interval/interval_item.dart';
 import 'package:overtimer_mobile/models/tag_item.dart';
 import 'package:overtimer_mobile/services/tag_service.dart';
-import 'package:overtimer_mobile/widgets/new_interval/new_interval_duration_input.dart';
-import 'package:overtimer_mobile/widgets/new_interval/new_interval_item_header.dart';
-import 'package:overtimer_mobile/widgets/new_interval/new_interval_tag_input.dart';
-import 'package:overtimer_mobile/widgets/new_interval/new_interval_title_input.dart';
+import 'package:overtimer_mobile/widgets/interval/new_interval_duration_input.dart';
+import 'package:overtimer_mobile/widgets/interval/new_interval_item_header.dart';
+import 'package:overtimer_mobile/widgets/interval/new_interval_tag_input.dart';
+import 'package:overtimer_mobile/widgets/interval/new_interval_title_input.dart';
 
 class NewIntervalItem extends StatefulWidget {
   NewIntervalItem({super.key, required this.availableTags});

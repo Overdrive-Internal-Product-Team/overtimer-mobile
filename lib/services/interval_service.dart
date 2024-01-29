@@ -4,22 +4,23 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class IntervalService {
-  // static Future<void> deleteTag(int id) async {
-  //   try {
-  //     var apiUrl = dotenv.get("API_URL");
-  //     var url = Uri.http(apiUrl, '/api/Tag/$id');
+  static Future<void> deleteTag(int id) async {
+    try {
+      var apiUrl = dotenv.get("API_URL");
+      var url = Uri.http(apiUrl, '/api/Work/$id');
 
-  //     var response = await http.delete(url);
+      var response = await http.delete(url);
 
-  //     if (response.statusCode == 200) {
-  //     } else {
-  //       throw Exception(
-  //           'Status code: ${response.statusCode}, Body: ${response.body}');
-  //     }
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  // }
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception(
+            'Status code: ${response.statusCode}, Body: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
   DateTime _createDateTime(String datetime) {
     return DateTime.parse(datetime);
   }
