@@ -1,11 +1,18 @@
 class IntervalItem {
-  const IntervalItem(
-      {required this.id,
-      required this.title,
-      required this.start,
-      required this.end});
+  const IntervalItem({
+    required this.id,
+    required this.title,
+    required this.start,
+    required this.end,
+    required this.userId,
+    required this.projectId,
+    required this.tagIds,
+  });
 
   final int id;
+  final int userId;
+  final int projectId;
+  final List tagIds;
   final String title;
   final DateTime start;
   final DateTime end;

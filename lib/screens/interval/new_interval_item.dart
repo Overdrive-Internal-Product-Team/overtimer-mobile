@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:overtimer_mobile/models/interval/interval_item.dart';
+import 'package:overtimer_mobile/models/tag_item.dart';
+import 'package:overtimer_mobile/services/tag_service.dart';
 import 'package:overtimer_mobile/widgets/new_interval/new_interval_duration_input.dart';
 import 'package:overtimer_mobile/widgets/new_interval/new_interval_item_header.dart';
 import 'package:overtimer_mobile/widgets/new_interval/new_interval_tag_input.dart';
 import 'package:overtimer_mobile/widgets/new_interval/new_interval_title_input.dart';
 
 class NewIntervalItem extends StatefulWidget {
-  const NewIntervalItem({super.key});
+  NewIntervalItem({super.key, required this.availableTags});
+
+  late Future<List<TagItem>> availableTags;
 
   @override
   State<NewIntervalItem> createState() {
@@ -19,6 +23,14 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
   String _enteredTitle = '';
   String _currentHoursDuration = '00';
   String _currentMinutesDuration = '00';
+  TagItem? _selectedTag;
+
+  void _onSelectTag(TagItem item) {
+    setState(() {
+      _selectedTag = item;
+    });
+  }
+
   // var _enteredStartDate = new DateTime();
   // var _enteredEndDate = new DateTime();
 
@@ -27,11 +39,20 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
   //     filter: {"#": RegExp(r'[0-9]')},
   //     type: MaskAutoCompletionType.lazy);
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // final availableTags = await TagService.getTags();
+  //   setState(() {
+  //     _availableTags = TagService.getTags();
+  //   });
+  // }
+
   void _saveItem() {
-    Navigator.of(context).pop(_createIntervalItem(
-        _enteredTitle == '' ? 'Sem título' : _enteredTitle,
-        _currentHoursDuration,
-        _currentMinutesDuration));
+    Navigator.of(context).pop(
+      _createIntervalItem(_enteredTitle == '' ? 'Sem título' : _enteredTitle,
+          _currentHoursDuration, _currentMinutesDuration),
+    );
   }
 
   IntervalItem _createIntervalItem(title, hoursDuration, minutesDuration) {
@@ -41,6 +62,9 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
 
     return IntervalItem(
         id: 1,
+        userId: 2,
+        projectId: 1,
+        tagIds: [_selectedTag!.id],
         title: _enteredTitle == '' ? 'Sem título' : _enteredTitle,
         start: now,
         end: endDate);
@@ -82,7 +106,12 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
             ),
             const Divider(),
             NewIntervalTitleInput(onChange: _onChangeTitle),
-            const NewIntervalTagInput()
+            NewIntervalTagInput(
+                availableTags: widget.availableTags,
+                currentTag: _selectedTag,
+                onChange: (value) {
+                  _onSelectTag(value!);
+                }),
           ],
         ),
       ),

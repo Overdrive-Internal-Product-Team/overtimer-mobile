@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:overtimer_mobile/services/interval_service.dart';
+import 'package:overtimer_mobile/services/tag_service.dart';
 import 'package:overtimer_mobile/widgets/common/data_retrieve_fail.dart';
 import 'package:overtimer_mobile/models/interval/interval_item.dart';
+import 'package:overtimer_mobile/models/tag_item.dart';
 import 'package:overtimer_mobile/screens/interval/new_interval_item.dart';
 
 class IntervalListScreen extends StatefulWidget {
@@ -14,11 +16,14 @@ class IntervalListScreen extends StatefulWidget {
 class _IntervalListScreenState extends State<IntervalListScreen> {
   final List<IntervalItem> _intervalListScreen = [];
   late Future<List<IntervalItem>> _intervalsFuture;
+  // final List<TagItem> _chosenTags = [];
+  late Future<List<TagItem>> _availableTags;
 
   @override
   void initState() {
     super.initState();
     _intervalsFuture = IntervalService().getIntervals();
+    _availableTags = TagService.getTags();
   }
 
   void _refreshIntervals() {
@@ -30,15 +35,21 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
   void _addItem() async {
     final newItem = await Navigator.of(context).push<IntervalItem>(
       MaterialPageRoute(
-        builder: (ctx) => const NewIntervalItem(),
+        builder: (ctx) => NewIntervalItem(
+          availableTags: _availableTags,
+        ),
       ),
     );
     if (newItem == null) {
       return;
     }
-    setState(() {
-      _intervalListScreen.add(newItem);
-    });
+    try {
+      await IntervalService().addInterval(newItem, 1);
+      _refreshIntervals();
+    } catch (e) {
+      print(e);
+      //...
+    }
   }
 
   _removeItem(IntervalItem item) {
@@ -87,16 +98,16 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
           return DataRetrieveFail(onRetry: _refreshIntervals);
         } else {
           return ListView.builder(
-            itemCount: _intervalListScreen.length,
+            itemCount: snapshot.data!.length,
             itemBuilder: (ctx, index) => Dismissible(
               onDismissed: (direction) {
-                _removeItem(_intervalListScreen[index]);
+                _removeItem(snapshot.data![index]);
               },
-              key: ValueKey(_intervalListScreen[index].id),
+              key: ValueKey(snapshot.data![index].id),
               child: ListTile(
-                title: Text(_intervalListScreen[index].title),
+                title: Text(snapshot.data![index].title),
                 trailing: Text(
-                  _intervalListScreen[index].intervalTime,
+                  snapshot.data![index].intervalTime,
                 ),
               ),
             ),

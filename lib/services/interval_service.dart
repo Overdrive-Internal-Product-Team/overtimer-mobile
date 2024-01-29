@@ -37,9 +37,10 @@ class IntervalService {
         List<IntervalItem> intervals = decodedData
             .map((dynamic jsonTag) => IntervalItem(
                   id: jsonTag['id'] as int? ?? 0,
+                  userId: jsonTag['userId'] as int? ?? 0,
+                  projectId: jsonTag['companyId'] as int? ?? 0,
+                  tagIds: jsonTag['tags'],
                   title: jsonTag['title'] as String? ?? "",
-                  // start: jsonTag['initialDateTime'] as DateTime? ?? 0,
-                  // end: jsonTag['finalDateTime'] as DateTime? ?? 0,
                   start: _createDateTime(jsonTag['initialDateTime']),
                   end: _createDateTime(jsonTag['finalDateTime']),
                 ))
@@ -87,10 +88,12 @@ class IntervalService {
       var headers = {'Content-Type': 'application/json'};
 
       var requestBody = {
-        'companyId': companyId,
+        'userId': interval.userId,
+        'projectId': interval.projectId,
         'title': interval.title,
-        'initialDateTime': interval.start,
-        'endDateTime': interval.end,
+        'initialDateTime': interval.start.toUtc().toIso8601String(),
+        'finalDateTime': interval.end.toUtc().toIso8601String(),
+        'tagIds': interval.tagIds,
       };
 
       var response = await http.post(
