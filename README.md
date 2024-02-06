@@ -1,16 +1,9 @@
-# overtimer_mobile
+# Overtimer Mobile App
 
-A new Flutter project.
+Este é o aplicativo mobile Overtimer, desenvolvido em Flutter, que consome as funcionalidades da API OvertimerAPI (ClockifyClone).
 
-## Getting Started
+## Documentação:
 
-This project is a starting point for a Flutter application.
+Consulte o projeto no github para obter maiores detalhes sobre o desenvolvimento:
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- [Projeto no GitHub](https://github.com/orgs/Overdrive-Internal-Product-Team/projects/2/views/1)
