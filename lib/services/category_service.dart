@@ -1,18 +1,26 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:overtimer_mobile/models/category_item.dart';
 import 'package:http/http.dart' as http;
+import 'package:overtimer_mobile/services/auth_service.dart';
 import 'dart:convert' as convert;
 
 class CategoryService {
   static Future<void> deleteCategory(int id) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Category/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Category/$id');
 
-      var response = await http.delete(url);
+      var token = await AuthService.getToken();
 
-      if (response.statusCode == 200) {
-      } else {
+      var response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode != 200) {
         throw Exception(
             'Status code: ${response.statusCode}, Body: ${response.body}');
       }
@@ -23,10 +31,18 @@ class CategoryService {
 
   static Future<List<CategoryItem>> getCategories() async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Category');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Category');
 
-      var response = await http.get(url);
+      var token = await AuthService.getToken();
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> decodedData = convert.jsonDecode(response.body);
@@ -50,10 +66,18 @@ class CategoryService {
 
   static Future<CategoryItem> getCategory(int id) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Category/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Category/$id');
 
-      var response = await http.get(url);
+      var token = await AuthService.getToken();
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
       if (response.statusCode == 200) {
         dynamic decodedData = convert.jsonDecode(response.body);
@@ -75,10 +99,15 @@ class CategoryService {
 
   static Future<void> addCategory(String name, int companyId) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Category');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Category');
 
-      var headers = {'Content-Type': 'application/json'};
+      var token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
 
       var requestBody = {
         'companyId': companyId,
@@ -91,8 +120,7 @@ class CategoryService {
         body: convert.jsonEncode(requestBody),
       );
 
-      if (response.statusCode == 200) {
-      } else {
+      if (response.statusCode != 200) {
         throw Exception('Erro no cadastro da categoria: ${response.statusCode}');
       }
     } catch (e) {
@@ -102,10 +130,15 @@ class CategoryService {
 
   static Future<void> editCategory(int id, String name, int companyId) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Category/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Category/$id');
 
-      var headers = {'Content-Type': 'application/json'};
+      var token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
 
       var requestBody = {
         'companyId': companyId,
@@ -118,9 +151,7 @@ class CategoryService {
         body: convert.jsonEncode(requestBody),
       );
 
-      if (response.statusCode == 200) {
-        // Categoria editada com sucesso
-      } else {
+      if (response.statusCode != 200) {
         throw Exception('Erro na edição da categoria: ${response.statusCode}');
       }
     } catch (e) {

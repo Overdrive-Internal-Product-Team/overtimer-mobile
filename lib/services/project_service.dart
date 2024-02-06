@@ -3,16 +3,25 @@ import 'package:overtimer_mobile/models/project_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'auth_service.dart';
+
 class ProjectService {
   static Future<void> deleteProject(int id) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Project/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Project/$id');
 
-      var response = await http.delete(url);
+      final token = await AuthService.getToken();
 
-      if (response.statusCode == 200) {
-      } else {
+      var response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode != 200) {
         throw Exception(
             'Status code: ${response.statusCode}, Body: ${response.body}');
       }
@@ -23,10 +32,18 @@ class ProjectService {
 
   static Future<List<ProjectItem>> getProjects() async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Project');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Project');
 
-      var response = await http.get(url);
+      final token = await AuthService.getToken();
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> decodedData = convert.jsonDecode(response.body);
@@ -50,10 +67,18 @@ class ProjectService {
 
   static Future<ProjectItem> getProject(int id) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Project/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Project/$id');
 
-      var response = await http.get(url);
+      final token = await AuthService.getToken();
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
       if (response.statusCode == 200) {
         dynamic decodedData = convert.jsonDecode(response.body);
@@ -75,10 +100,15 @@ class ProjectService {
 
   static Future<void> addProject(String name, int categoryId) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Project');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Project');
 
-      var headers = {'Content-Type': 'application/json'};
+      final token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
 
       var requestBody = {
         'categoryId': categoryId,
@@ -91,9 +121,9 @@ class ProjectService {
         body: convert.jsonEncode(requestBody),
       );
 
-      if (response.statusCode == 200) {
-      } else {
-        throw Exception('Erro no cadastro do projeto: ${response.statusCode}');
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Erro no cadastro do projeto: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Exception during HTTP request: $e');
@@ -102,10 +132,15 @@ class ProjectService {
 
   static Future<void> editProject(int id, String name, int categoryId) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Project/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Project/$id');
 
-      var headers = {'Content-Type': 'application/json'};
+      final token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
 
       var requestBody = {
         'categoryId': categoryId,
@@ -118,10 +153,9 @@ class ProjectService {
         body: convert.jsonEncode(requestBody),
       );
 
-      if (response.statusCode == 200) {
-        // Projeto editado com sucesso
-      } else {
-        throw Exception('Erro na edição do projeto: ${response.statusCode}');
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Erro na edição do projeto: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Exception during HTTP request: $e');

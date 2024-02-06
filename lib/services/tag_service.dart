@@ -3,16 +3,25 @@ import 'package:overtimer_mobile/models/tag_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'auth_service.dart';
+
 class TagService {
   static Future<void> deleteTag(int id) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Tag/$id');
 
-      var response = await http.delete(url);
+      final token = await AuthService.getToken();
 
-      if (response.statusCode == 200) {
-      } else {
+      var response = await http.delete(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
+
+      if (response.statusCode != 200) {
         throw Exception(
             'Status code: ${response.statusCode}, Body: ${response.body}');
       }
@@ -23,20 +32,28 @@ class TagService {
 
   static Future<List<TagItem>> getTags() async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Tag');
 
-      var response = await http.get(url);
+      final token = await AuthService.getToken();
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
       if (response.statusCode == 200) {
         List<dynamic> decodedData = convert.jsonDecode(response.body);
 
         List<TagItem> tags = decodedData
             .map((dynamic jsonTag) => TagItem(
-                  id: jsonTag['id'] as int? ?? 0,
-                  name: jsonTag['name'] as String? ?? "",
-                  companyId: jsonTag['companyId'] as int? ?? 0,
-                ))
+          id: jsonTag['id'] as int? ?? 0,
+          name: jsonTag['name'] as String? ?? "",
+          companyId: jsonTag['companyId'] as int? ?? 0,
+        ))
             .toList();
 
         return tags;
@@ -50,10 +67,18 @@ class TagService {
 
   static Future<TagItem> getTag(int id) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Tag/$id');
 
-      var response = await http.get(url);
+      final token = await AuthService.getToken();
+
+      var response = await http.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '$token',
+        },
+      );
 
       if (response.statusCode == 200) {
         dynamic decodedData = convert.jsonDecode(response.body);
@@ -75,10 +100,15 @@ class TagService {
 
   static Future<void> addTag(String name, int companyId) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Tag');
 
-      var headers = {'Content-Type': 'application/json'};
+      final token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
 
       var requestBody = {
         'companyId': companyId,
@@ -91,8 +121,7 @@ class TagService {
         body: convert.jsonEncode(requestBody),
       );
 
-      if (response.statusCode == 200) {
-      } else {
+      if (response.statusCode != 200) {
         throw Exception('Erro no cadastro da tag: ${response.statusCode}');
       }
     } catch (e) {
@@ -102,10 +131,15 @@ class TagService {
 
   static Future<void> editTag(int id, String name, int companyId) async {
     try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Tag/$id');
+      final apiUrl = dotenv.get("API_URL");
+      final url = Uri.http(apiUrl, '/api/Tag/$id');
 
-      var headers = {'Content-Type': 'application/json'};
+      final token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
 
       var requestBody = {
         'companyId': companyId,
@@ -118,14 +152,11 @@ class TagService {
         body: convert.jsonEncode(requestBody),
       );
 
-      if (response.statusCode == 200) {
-        // Tag editada com sucesso
-      } else {
+      if (response.statusCode != 200) {
         throw Exception('Erro na edição da tag: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Exception during HTTP request: $e');
     }
   }
-
 }
