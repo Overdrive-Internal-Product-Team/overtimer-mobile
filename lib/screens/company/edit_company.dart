@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
+import 'package:overtimer_mobile/services/company_service.dart';
 
 class EditCompany extends StatefulWidget {
   const EditCompany({Key? key}) : super(key: key);
@@ -20,26 +18,7 @@ class _EditCompanyState extends State<EditCompany> {
   @override
   void initState() {
     super.initState();
-    _companyData = _getCompany();
-  }
-
-  Future<Map<String, dynamic>> _getCompany() async {
-    try {
-      var apiUrl = dotenv.get("API_URL");
-      var url = Uri.http(apiUrl, '/api/Company/1');
-
-      var response = await http.get(url);
-      if (response.statusCode == 200) {
-        return convert.jsonDecode(response.body) as Map<String, dynamic>;
-      } else {
-        print('Error: ${response.statusCode}');
-        print('Response body: ${response.body}');
-        throw Exception('Failed to load company data');
-      }
-    } catch (e) {
-      print('Exception during HTTP request: $e');
-      throw Exception('Failed to load company data');
-    }
+    _companyData = CompanyService.getCompany();
   }
 
   void _showSuccessDialog() {
@@ -66,31 +45,13 @@ class _EditCompanyState extends State<EditCompany> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
 
-      try {
-        var apiUrl = dotenv.get("API_URL");
-        var url = Uri.http(apiUrl, '/api/Company/1');
-        var headers = {'Content-Type': 'application/json'};
+      var response = await CompanyService.editCompany(
+        _enteredName,
+        _enteredCnpj,
+      );
 
-        var requestBody = {
-          'name': _enteredName,
-          'cnpj': _enteredCnpj,
-        };
-
-        var response = await http.patch(
-          url,
-          headers: headers,
-          body: convert.jsonEncode(requestBody),
-        );
-
-        if (response.statusCode == 200) {
-          print('Atualização bem-sucedida!');
-          _showSuccessDialog();
-        } else {
-          print('Erro na atualização: ${response.statusCode}');
-          print('Response body: ${response.body}');
-        }
-      } catch (e) {
-        print('Exception during HTTP request: $e');
+      if (response != null && response.statusCode == 200) {
+        _showSuccessDialog();
       }
     }
   }
