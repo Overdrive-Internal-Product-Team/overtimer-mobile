@@ -6,27 +6,46 @@ import 'package:overtimer_mobile/widgets/interval/new_interval_item_header.dart'
 import 'package:overtimer_mobile/widgets/interval/new_interval_tag_input.dart';
 import 'package:overtimer_mobile/widgets/interval/new_interval_title_input.dart';
 
-class NewIntervalItem extends StatefulWidget {
-  NewIntervalItem({super.key, required this.availableTags});
+class EditIntervalItem extends StatefulWidget {
+  EditIntervalItem(
+      {super.key, required this.intervalItem, required this.availableTags});
 
   late Future<List<TagItem>> availableTags;
+  final IntervalItem intervalItem;
 
   @override
-  State<NewIntervalItem> createState() {
-    return _NewIntervalItemState();
+  State<EditIntervalItem> createState() {
+    return _EditIntervalItemState();
   }
 }
 
-class _NewIntervalItemState extends State<NewIntervalItem> {
+class _EditIntervalItemState extends State<EditIntervalItem> {
   // final _formKey = GlobalKey<FormState>();
   String _enteredTitle = '';
   String _currentHoursDuration = '00';
   String _currentMinutesDuration = '00';
-  List<TagItem> _selectedTag = [];
+  List<TagItem> _selectedTags = [];
 
-  void _onSelectTag(List<TagItem> item) {
+  @override
+  void initState() {
+    super.initState();
+    _enteredTitle = widget.intervalItem.title;
+    _currentHoursDuration = widget.intervalItem.intervalMap['hours']!;
+    _currentMinutesDuration = widget.intervalItem.intervalMap['minutes']!;
+    _selectedTags = widget.intervalItem.tagIds;
+    print(_selectedTags);
+    // _selectedTag = widget.intervalItem.tagIds.isEmpty
+    //     ? null
+    //     // : widget.intervalItem.tagIds[0];
+    //     : TagItem(
+    //         id: widget.intervalItem.tagIds[0]['id'],
+    //         name: widget.intervalItem.tagIds[0]['name'],
+    //         companyId: widget.intervalItem.tagIds[0]['companyId']);
+  }
+
+  void _onSelectTags(List<TagItem> items) {
     setState(() {
-      _selectedTag = item;
+      _selectedTags = items;
     });
   }
 
@@ -63,7 +82,7 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
         id: 1,
         userId: 2,
         projectId: 1,
-        tagIds: _selectedTag,
+        tagIds: _selectedTags,
         title: _enteredTitle == '' ? 'Sem título' : _enteredTitle,
         start: now,
         end: endDate);
@@ -86,7 +105,7 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Adicione um novo registro'),
+        title: const Text('Edição de entrada'),
       ),
       floatingActionButton:
           ElevatedButton(onPressed: _saveItem, child: const Icon(Icons.check)),
@@ -104,12 +123,14 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
               currentMinutesDuration: _currentMinutesDuration,
             ),
             const Divider(),
-            NewIntervalTitleInput(onChange: _onChangeTitle),
+            NewIntervalTitleInput(
+                initialValue: widget.intervalItem.title,
+                onChange: _onChangeTitle),
             NewIntervalTagInput(
                 availableTags: widget.availableTags,
-                currentTagList: const [],
+                currentTagList: _selectedTags,
                 onChange: (value) {
-                  _onSelectTag(value);
+                  _onSelectTags(value);
                 }),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:overtimer_mobile/screens/interval/edit_interval_item.dart';
 import 'package:overtimer_mobile/services/interval_service.dart';
 import 'package:overtimer_mobile/services/tag_service.dart';
 import 'package:overtimer_mobile/widgets/common/data_retrieve_fail.dart';
@@ -109,6 +110,18 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
               },
               key: ValueKey(snapshot.data![index].id),
               child: ListTile(
+                onTap: () async {
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditIntervalItem(
+                        intervalItem: snapshot.data![index],
+                        availableTags: _availableTags,
+                      ),
+                    ),
+                  );
+                  _refreshIntervals();
+                },
                 title: Text(snapshot.data![index].title),
                 trailing: Text(
                   snapshot.data![index].intervalTime,

@@ -1,3 +1,5 @@
+import 'package:overtimer_mobile/models/tag_item.dart';
+
 class IntervalItem {
   const IntervalItem({
     required this.id,
@@ -12,15 +14,19 @@ class IntervalItem {
   final int id;
   final int userId;
   final int projectId;
-  final List tagIds;
+  final List<TagItem> tagIds;
   final String title;
   final DateTime start;
   final DateTime end;
 
-  String get intervalTime {
+  Map<String, String> get intervalMap {
     final interval = end.difference(start);
     final hours = interval.inHours.toString().padLeft(2, '0');
     final minutes = (interval.inMinutes % 60).toString().padLeft(2, '0');
-    return '$hours:$minutes';
+    return {'hours': hours, 'minutes': minutes};
+  }
+
+  String get intervalTime {
+    return '$intervalMap[hours]:$intervalMap[minutes]';
   }
 }

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:overtimer_mobile/screens/base_screen.dart';
-import 'package:overtimer_mobile/screens/tag/list_tag.dart';
-import 'package:overtimer_mobile/widgets/drawer/main_drawer.dart';
 
 void main() async {
   await dotenv.load();

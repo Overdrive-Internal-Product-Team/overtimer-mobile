@@ -3,6 +3,8 @@ import 'package:overtimer_mobile/models/interval/interval_item.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
+import 'package:overtimer_mobile/models/tag_item.dart';
+
 class IntervalService {
   static Future<void> deleteTag(int id) async {
     try {
@@ -25,6 +27,16 @@ class IntervalService {
     return DateTime.parse(datetime);
   }
 
+  List<TagItem> _getTagIds(List intervalTags) {
+    print(intervalTags);
+    return intervalTags.map((tag) {
+      return TagItem(
+          id: tag['id'] as int,
+          name: tag['name'] as String,
+          companyId: tag['companyId'] as int);
+    }).toList();
+  }
+
   Future<List<IntervalItem>> getIntervals() async {
     try {
       var apiUrl = dotenv.get("API_URL");
@@ -35,17 +47,17 @@ class IntervalService {
       if (response.statusCode == 200) {
         List<dynamic> decodedData = convert.jsonDecode(response.body);
 
-        List<IntervalItem> intervals = decodedData
-            .map((dynamic jsonTag) => IntervalItem(
-                  id: jsonTag['id'] as int? ?? 0,
-                  userId: jsonTag['userId'] as int? ?? 0,
-                  projectId: jsonTag['companyId'] as int? ?? 0,
-                  tagIds: jsonTag['tags'],
-                  title: jsonTag['title'] as String? ?? "",
-                  start: _createDateTime(jsonTag['initialDateTime']),
-                  end: _createDateTime(jsonTag['finalDateTime']),
-                ))
-            .toList();
+        List<IntervalItem> intervals = decodedData.map((dynamic jsonInterval) {
+          return IntervalItem(
+            id: jsonInterval['id'] as int? ?? 0,
+            userId: jsonInterval['userId'] as int? ?? 0,
+            projectId: jsonInterval['companyId'] as int? ?? 0,
+            tagIds: _getTagIds(jsonInterval['tags']),
+            title: jsonInterval['title'] as String? ?? "",
+            start: _createDateTime(jsonInterval['initialDateTime']),
+            end: _createDateTime(jsonInterval['finalDateTime']),
+          );
+        }).toList();
 
         return intervals;
       } else {
