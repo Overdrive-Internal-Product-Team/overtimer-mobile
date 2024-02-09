@@ -13,6 +13,11 @@ class DrawerItemsAdmin extends StatelessWidget {
       children: [
         DrawerItem(
           onSelectScreen: onSelectScreen,
+          category: 'inicio',
+          icon: Icons.home,
+        ),
+        DrawerItem(
+          onSelectScreen: onSelectScreen,
           category: 'empresa',
           icon: Icons.business,
         ),
