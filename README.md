@@ -2,6 +2,16 @@
 
 Este é o aplicativo mobile Overtimer, desenvolvido em Flutter, que consome as funcionalidades da API OvertimerAPI (ClockifyClone).
 
+## Acessos:
+
+Usuário padrão:
+Email - user@user.com
+Senha - password
+
+Usuário admin:
+Email - admin@admin.com
+Senha - password
+
 ## Documentação:
 
 Consulte o projeto no github para obter maiores detalhes sobre o desenvolvimento:
