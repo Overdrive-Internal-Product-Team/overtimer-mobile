@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 import 'package:overtimer_mobile/models/tag_item.dart';
+import 'auth_service.dart';
 
 class IntervalService {
   static Future<void> deleteInterval(int id) async {
@@ -41,7 +42,14 @@ class IntervalService {
       var apiUrl = dotenv.get("API_URL");
       var url = Uri.http(apiUrl, '/api/work');
 
-      var response = await http.get(url);
+      var token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
+
+      var response = await http.get(url, headers: headers);
 
       if (response.statusCode == 200) {
         List<dynamic> decodedData = convert.jsonDecode(response.body);
@@ -96,7 +104,12 @@ class IntervalService {
       var apiUrl = dotenv.get("API_URL");
       var url = Uri.http(apiUrl, '/api/work');
 
-      var headers = {'Content-Type': 'application/json'};
+      var token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
 
       var requestBody = {
         'userId': interval.userId,

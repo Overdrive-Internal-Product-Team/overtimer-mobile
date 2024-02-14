@@ -5,48 +5,60 @@ import 'package:overtimer_mobile/screens/interval/interval_list.dart';
 import 'package:overtimer_mobile/screens/project/list_project.dart';
 import 'package:overtimer_mobile/screens/tag/list_tag.dart';
 import 'package:overtimer_mobile/widgets/drawer/main_drawer.dart';
+import '../models/user_info.dart';
+import 'admin_home_screen.dart';
 
 class BaseScreen extends StatefulWidget {
-  const BaseScreen({super.key});
+  const BaseScreen({Key? key, required this.userInfo}) : super(key: key);
+
+  final UserInfo userInfo;
 
   @override
   State<BaseScreen> createState() => _BaseScreenState();
 }
 
 class _BaseScreenState extends State<BaseScreen> {
-  void _setScreen(String identifier) async {
-    // Navigator.of(context).pop();
+  final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
+
+  void _setScreen(String identifier) {
     if (identifier == 'tags') {
-      Navigator.of(context).push(
+      _navigatorKey.currentState?.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const ListTag(),
         ),
       );
     } else if (identifier == 'empresa') {
-      Navigator.of(context).push(
+      _navigatorKey.currentState?.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const EditCompany(),
         ),
       );
     } else if (identifier == 'entradas') {
-      Navigator.of(context).push(
+      _navigatorKey.currentState?.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const IntervalListScreen(),
         ),
       );
     } else if (identifier == 'projetos') {
-      Navigator.of(context).push(
+      _navigatorKey.currentState?.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const ListProject(),
         ),
       );
     } else if (identifier == 'categorias') {
-      Navigator.of(context).push(
+      _navigatorKey.currentState?.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const ListCategory(),
         ),
       );
+    } else if (identifier == 'inicio') {
+      _navigatorKey.currentState?.pushReplacement(
+        MaterialPageRoute(
+          builder: (ctx) => const AdminHomeScreen(),
+        ),
+      );
     }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -57,8 +69,23 @@ class _BaseScreenState extends State<BaseScreen> {
       ),
       drawer: MainDrawer(
         onSelectScreen: _setScreen,
+        userInfo: widget.userInfo,
       ),
-      body: const IntervalListScreen(),
+      body: Navigator(
+        key: _navigatorKey,
+        onGenerateRoute: (settings) {
+          WidgetBuilder builder;
+          builder = (BuildContext context) => _buildBody();
+
+          return MaterialPageRoute(builder: builder, settings: settings);
+        },
+      ),
     );
+  }
+
+  Widget _buildBody() {
+    return widget.userInfo.role.id == 1
+        ? const AdminHomeScreen()
+        : const IntervalListScreen();
   }
 }
