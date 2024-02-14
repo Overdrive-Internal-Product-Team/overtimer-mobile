@@ -20,7 +20,7 @@ class _NewIntervalDurationInputState extends State<NewIntervalDurationInput> {
   final _hoursController = TextEditingController(text: '00');
   final _minutesController = TextEditingController(text: '00');
 
-  void _openAddExpenseOverlay(BuildContext context) {
+  void _openAddDurationOverlay(BuildContext context) {
     _hoursController.text = widget.currentHoursDuration;
     _hoursController.text = widget.currentMinutesDuration;
 
@@ -63,7 +63,7 @@ class _NewIntervalDurationInputState extends State<NewIntervalDurationInput> {
             ),
             child: const Text('Cancelar'),
             onPressed: () {
-              Navigator.of(context).pop();
+              Navigator.of(ctx).pop();
             },
           ),
           TextButton(
@@ -74,7 +74,7 @@ class _NewIntervalDurationInputState extends State<NewIntervalDurationInput> {
             onPressed: () {
               widget.onSaveDuration(
                   _hoursController.text, _minutesController.text);
-              Navigator.of(context).pop();
+              Navigator.of(ctx).pop();
             },
           ),
         ],
@@ -97,7 +97,7 @@ class _NewIntervalDurationInputState extends State<NewIntervalDurationInput> {
       ),
       GestureDetector(
         onTap: () {
-          _openAddExpenseOverlay(context);
+          _openAddDurationOverlay(context);
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
