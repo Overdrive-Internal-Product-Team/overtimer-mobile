@@ -19,32 +19,20 @@ class NewIntervalTagInput extends StatefulWidget {
 }
 
 class _NewIntervalTagInputState extends State<NewIntervalTagInput> {
-  var initialTagList;
+  // var initialTagList;
   @override
   void initState() {
-    // TODO: implement initState
-    initialTagList = widget.currentTagList
-        .map((item) => MultiSelectItem(
-              item,
-              item.name,
-            ))
-        .toList();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // final initialTagList = widget.currentTagList
+    // initialTagList = widget.currentTagList
     //     .map((item) => MultiSelectItem(
     //           item,
     //           item.name,
     //         ))
     //     .toList();
-    // final tagItemList = widget.currentTagList.map((item) {
+    super.initState();
+  }
 
-    // }).toList();
-    // print(tagItemList);
-    print('pegaaaaa: ${widget.currentTagList}');
+  @override
+  Widget build(BuildContext context) {
     return FutureBuilder<List<TagItem>>(
       future: widget.availableTags,
       builder: (context, snapshot) {
@@ -67,33 +55,12 @@ class _NewIntervalTagInputState extends State<NewIntervalTagInput> {
             listType: MultiSelectListType.CHIP,
             onConfirm: (values) {
               final List<TagItem> tagItemList = values.cast<TagItem>();
-              // final List<TagItem> tagItemList = values.cast<TagItem>();
               widget.onChange(tagItemList);
             },
             // initialValue: initialTagList,
-            // initialValue: tagItemList,
-            // onChanged: (valorSelecionado) {
-            //   widget.onChange(valorSelecionado);
-            // },
           );
         }
       },
     );
   }
-  // return const TextField(
-  //   readOnly: false,
-  //   decoration: InputDecoration(
-  //       icon: Icon(Icons.turned_in_sharp), label: Text('Etiqueta')),
-  // // );
-  // return DropdownButton(
-  //     value: widget.currentTag,
-  //     items: widget.availableTags
-  //         .map((category) => DropdownMenuItem(
-  //               value: category,
-  //               child: Text(category.name.toUpperCase()),
-  //             ))
-  //         .toList(),
-  //     onChanged: (value) {
-  //       widget.onChange(value);
-  //     });
 }

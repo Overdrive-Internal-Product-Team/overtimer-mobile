@@ -12,7 +12,14 @@ class IntervalService {
       var apiUrl = dotenv.get("API_URL");
       var url = Uri.http(apiUrl, '/api/Work/$id');
 
-      var response = await http.delete(url);
+      var token = await AuthService.getToken();
+
+      var headers = {
+        'Content-Type': 'application/json',
+        'Authorization': '$token',
+      };
+
+      var response = await http.delete(url, headers: headers);
 
       if (response.statusCode == 200) {
       } else {
