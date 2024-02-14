@@ -79,7 +79,7 @@ class _EditIntervalItemState extends State<EditIntervalItem> {
         hours: int.parse(hoursDuration), minutes: int.parse(minutesDuration)));
 
     return IntervalItem(
-        id: 1,
+        id: widget.intervalItem.id,
         userId: 2,
         projectId: 1,
         tagIds: _selectedTags,
@@ -129,7 +129,7 @@ class _EditIntervalItemState extends State<EditIntervalItem> {
             NewIntervalTagInput(
                 availableTags: widget.availableTags,
                 currentTagList: _selectedTags,
-                onChange: (value) {
+                onChange: (List<TagItem> value) {
                   _onSelectTags(value);
                 }),
           ],

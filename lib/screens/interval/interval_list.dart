@@ -54,6 +54,28 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
     }
   }
 
+  void _editItem(IntervalItem item) async {
+    final edittedItem = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditIntervalItem(
+          intervalItem: item,
+          availableTags: _availableTags,
+        ),
+      ),
+    );
+    if (edittedItem == null) {
+      return;
+    }
+    try {
+      await IntervalService.editInterval(edittedItem, 1);
+      _refreshIntervals();
+    } catch (e) {
+      print(e);
+      //...
+    }
+  }
+
   _removeItem(IntervalItem item) async {
     await DeleteConfirmationDialog.show(context, item);
     _refreshIntervals();
@@ -110,17 +132,8 @@ class _IntervalListScreenState extends State<IntervalListScreen> {
               },
               key: ValueKey(snapshot.data![index].id),
               child: ListTile(
-                onTap: () async {
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditIntervalItem(
-                        intervalItem: snapshot.data![index],
-                        availableTags: _availableTags,
-                      ),
-                    ),
-                  );
-                  _refreshIntervals();
+                onTap: () {
+                  _editItem(snapshot.data![index]);
                 },
                 title: Text(snapshot.data![index].title),
                 trailing: Text(

@@ -19,12 +19,32 @@ class NewIntervalTagInput extends StatefulWidget {
 }
 
 class _NewIntervalTagInputState extends State<NewIntervalTagInput> {
+  var initialTagList;
+  @override
+  void initState() {
+    // TODO: implement initState
+    initialTagList = widget.currentTagList
+        .map((item) => MultiSelectItem(
+              item,
+              item.name,
+            ))
+        .toList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final tagItemList = widget.currentTagList.map((item) {
-      print(item);
-    }).toList();
-    print(tagItemList);
+    // final initialTagList = widget.currentTagList
+    //     .map((item) => MultiSelectItem(
+    //           item,
+    //           item.name,
+    //         ))
+    //     .toList();
+    // final tagItemList = widget.currentTagList.map((item) {
+
+    // }).toList();
+    // print(tagItemList);
+    print('pegaaaaa: ${widget.currentTagList}');
     return FutureBuilder<List<TagItem>>(
       future: widget.availableTags,
       builder: (context, snapshot) {
@@ -35,18 +55,22 @@ class _NewIntervalTagInputState extends State<NewIntervalTagInput> {
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return const Text('Nenhum dado disponível.');
         } else {
-          List<TagItem> listaItens = snapshot.data!;
+          List<TagItem> itemsList = snapshot.data!;
+          List<MultiSelectItem> multiSelectTagItemList = itemsList
+              .map((item) => MultiSelectItem(
+                    item,
+                    item.name,
+                  ))
+              .toList();
           return MultiSelectDialogField(
-            items: listaItens
-                .map((item) => MultiSelectItem(
-                      item,
-                      item.name,
-                    ))
-                .toList(),
+            items: multiSelectTagItemList,
             listType: MultiSelectListType.CHIP,
             onConfirm: (values) {
-              print(values);
+              final List<TagItem> tagItemList = values.cast<TagItem>();
+              // final List<TagItem> tagItemList = values.cast<TagItem>();
+              widget.onChange(tagItemList);
             },
+            // initialValue: initialTagList,
             // initialValue: tagItemList,
             // onChanged: (valorSelecionado) {
             //   widget.onChange(valorSelecionado);

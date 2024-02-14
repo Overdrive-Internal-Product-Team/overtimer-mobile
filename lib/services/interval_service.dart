@@ -28,7 +28,6 @@ class IntervalService {
   }
 
   List<TagItem> _getTagIds(List intervalTags) {
-    print(intervalTags);
     return intervalTags.map((tag) {
       return TagItem(
           id: tag['id'] as int,
@@ -58,7 +57,7 @@ class IntervalService {
             end: _createDateTime(jsonInterval['finalDateTime']),
           );
         }).toList();
-
+        print(intervals);
         return intervals;
       } else {
         throw Exception('Falha ao carregar os dados: ${response.body}');
@@ -124,31 +123,36 @@ class IntervalService {
     }
   }
 
-  // static Future<void> editTag(int id, String name, int companyId) async {
-  //   try {
-  //     var apiUrl = dotenv.get("API_URL");
-  //     var url = Uri.http(apiUrl, '/api/Tag/$id');
+  static Future<void> editInterval(IntervalItem interval, int companyId) async {
+    try {
+      var apiUrl = dotenv.get("API_URL");
+      var url = Uri.http(apiUrl, '/api/Work/${interval.id}');
 
-  //     var headers = {'Content-Type': 'application/json'};
+      var headers = {'Content-Type': 'application/json'};
 
-  //     var requestBody = {
-  //       'companyId': companyId,
-  //       'name': name,
-  //     };
+      var requestBody = {
+        'userId': interval.userId,
+        'projectId': interval.projectId,
+        'title': interval.title,
+        'initialDateTime': interval.start.toUtc().toIso8601String(),
+        'finalDateTime': interval.end.toUtc().toIso8601String(),
+        'tagIds': interval.tagIds.map((tag) => tag.id).toList(),
+      };
 
-  //     var response = await http.patch(
-  //       url,
-  //       headers: headers,
-  //       body: convert.jsonEncode(requestBody),
-  //     );
+      var response = await http.patch(
+        url,
+        headers: headers,
+        body: convert.jsonEncode(requestBody),
+      );
 
-  //     if (response.statusCode == 200) {
-  //       // Tag editada com sucesso
-  //     } else {
-  //       throw Exception('Erro na edição da tag: ${response.statusCode}');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('Exception during HTTP request: $e');
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        // Intervalo editado com sucesso
+      } else {
+        throw Exception('Erro na edição da tag: ${response.statusCode}');
+      }
+    } catch (e) {
+      print(e);
+      throw Exception('Exception during HTTP request: $e');
+    }
+  }
 }
