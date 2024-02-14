@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:overtimer_mobile/models/project_item.dart';
 import 'package:overtimer_mobile/models/category_item.dart';
-import 'package:overtimer_mobile/services/category_service.dart';
 import 'package:overtimer_mobile/widgets/common/success_dialog.dart';
 
 class ProjectForm extends StatefulWidget {

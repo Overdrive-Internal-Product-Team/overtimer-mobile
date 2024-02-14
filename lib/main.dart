@@ -25,10 +25,14 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
-              if (snapshot.error is http.Response && (snapshot.error as http.Response).statusCode == 401) {
+              if (snapshot.error is http.Response &&
+                  (snapshot.error as http.Response).statusCode == 401) {
                 return const LoginScreen();
               } else {
-                return Scaffold(body: Center(child: Text('Erro ao acessar a API, tente novamente mais tarde!')));
+                return const Scaffold(
+                    body: Center(
+                        child: Text(
+                            'Erro ao acessar a API, tente novamente mais tarde!')));
               }
             }
             if (snapshot.hasData) {
@@ -37,7 +41,8 @@ class MyApp extends StatelessWidget {
               return const LoginScreen();
             }
           } else {
-            return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            return const Scaffold(
+                body: Center(child: CircularProgressIndicator()));
           }
         },
       ),
