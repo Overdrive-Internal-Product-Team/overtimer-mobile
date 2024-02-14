@@ -28,7 +28,7 @@ class DeleteConfirmationDialog {
               child: const Text('Confirmar'),
               onPressed: () async {
                 try {
-                  await IntervalService.deleteTag(item.id);
+                  await IntervalService.deleteInterval(item.id!);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(

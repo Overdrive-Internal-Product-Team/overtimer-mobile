@@ -6,7 +6,7 @@ import 'dart:convert' as convert;
 import 'package:overtimer_mobile/models/tag_item.dart';
 
 class IntervalService {
-  static Future<void> deleteTag(int id) async {
+  static Future<void> deleteInterval(int id) async {
     try {
       var apiUrl = dotenv.get("API_URL");
       var url = Uri.http(apiUrl, '/api/Work/$id');
@@ -46,18 +46,17 @@ class IntervalService {
       if (response.statusCode == 200) {
         List<dynamic> decodedData = convert.jsonDecode(response.body);
 
-        List<IntervalItem> intervals = decodedData.map((dynamic jsonInterval) {
-          return IntervalItem(
-            id: jsonInterval['id'] as int? ?? 0,
-            userId: jsonInterval['userId'] as int? ?? 0,
-            projectId: jsonInterval['companyId'] as int? ?? 0,
-            tagIds: _getTagIds(jsonInterval['tags']),
-            title: jsonInterval['title'] as String? ?? "",
-            start: _createDateTime(jsonInterval['initialDateTime']),
-            end: _createDateTime(jsonInterval['finalDateTime']),
-          );
-        }).toList();
-        print(intervals);
+        List<IntervalItem> intervals = decodedData
+            .map((dynamic jsonInterval) => IntervalItem(
+                  id: jsonInterval['id'] as int? ?? 0,
+                  userId: jsonInterval['userId'] as int? ?? 0,
+                  projectId: jsonInterval['companyId'] as int? ?? 0,
+                  tagIds: _getTagIds(jsonInterval['tags']),
+                  title: jsonInterval['title'] as String? ?? "",
+                  start: _createDateTime(jsonInterval['initialDateTime']),
+                  end: _createDateTime(jsonInterval['finalDateTime']),
+                ))
+            .toList();
         return intervals;
       } else {
         throw Exception('Falha ao carregar os dados: ${response.body}');
@@ -105,7 +104,7 @@ class IntervalService {
         'title': interval.title,
         'initialDateTime': interval.start.toUtc().toIso8601String(),
         'finalDateTime': interval.end.toUtc().toIso8601String(),
-        'tagIds': interval.tagIds,
+        'tagIds': interval.tagIds.map((tag) => tag.id).toList(),
       };
 
       var response = await http.post(

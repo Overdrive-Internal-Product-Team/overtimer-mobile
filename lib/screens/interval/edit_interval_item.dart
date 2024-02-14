@@ -33,14 +33,6 @@ class _EditIntervalItemState extends State<EditIntervalItem> {
     _currentHoursDuration = widget.intervalItem.intervalMap['hours']!;
     _currentMinutesDuration = widget.intervalItem.intervalMap['minutes']!;
     _selectedTags = widget.intervalItem.tagIds;
-    print(_selectedTags);
-    // _selectedTag = widget.intervalItem.tagIds.isEmpty
-    //     ? null
-    //     // : widget.intervalItem.tagIds[0];
-    //     : TagItem(
-    //         id: widget.intervalItem.tagIds[0]['id'],
-    //         name: widget.intervalItem.tagIds[0]['name'],
-    //         companyId: widget.intervalItem.tagIds[0]['companyId']);
   }
 
   void _onSelectTags(List<TagItem> items) {
@@ -48,23 +40,6 @@ class _EditIntervalItemState extends State<EditIntervalItem> {
       _selectedTags = items;
     });
   }
-
-  // var _enteredStartDate = new DateTime();
-  // var _enteredEndDate = new DateTime();
-
-  // var maskFormatter = MaskTextInputFormatter(
-  //     mask: '##:##',
-  //     filter: {"#": RegExp(r'[0-9]')},
-  //     type: MaskAutoCompletionType.lazy);
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // final availableTags = await TagService.getTags();
-  //   setState(() {
-  //     _availableTags = TagService.getTags();
-  //   });
-  // }
 
   void _saveItem() {
     Navigator.of(context).pop(

@@ -30,23 +30,6 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
     });
   }
 
-  // var _enteredStartDate = new DateTime();
-  // var _enteredEndDate = new DateTime();
-
-  // var maskFormatter = MaskTextInputFormatter(
-  //     mask: '##:##',
-  //     filter: {"#": RegExp(r'[0-9]')},
-  //     type: MaskAutoCompletionType.lazy);
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // final availableTags = await TagService.getTags();
-  //   setState(() {
-  //     _availableTags = TagService.getTags();
-  //   });
-  // }
-
   void _saveItem() {
     Navigator.of(context).pop(
       _createIntervalItem(_enteredTitle == '' ? 'Sem título' : _enteredTitle,
@@ -60,7 +43,6 @@ class _NewIntervalItemState extends State<NewIntervalItem> {
         hours: int.parse(hoursDuration), minutes: int.parse(minutesDuration)));
 
     return IntervalItem(
-        id: 1,
         userId: 2,
         projectId: 1,
         tagIds: _selectedTag,

@@ -2,7 +2,7 @@ import 'package:overtimer_mobile/models/tag_item.dart';
 
 class IntervalItem {
   const IntervalItem({
-    required this.id,
+    this.id,
     required this.title,
     required this.start,
     required this.end,
@@ -11,7 +11,7 @@ class IntervalItem {
     required this.tagIds,
   });
 
-  final int id;
+  final int? id;
   final int userId;
   final int projectId;
   final List<TagItem> tagIds;
